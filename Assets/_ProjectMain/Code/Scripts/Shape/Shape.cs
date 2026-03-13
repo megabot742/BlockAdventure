@@ -7,7 +7,7 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
 {
     public GameObject squareShapeImage;
     [SerializeField]Vector3 shapeSelectedScale;
-    [SerializeField] Vector2 offSet = new Vector2(0,700);
+    [SerializeField] //Vector2 offSet = new Vector2(0,700);
 
     [HideInInspector] public ShapeData CurrentShapeData;
     public int totalSquareNumber { get; set;}
@@ -27,6 +27,11 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
         //shapeDraggable = true;
         startPosition = rectTransform.localPosition;
         shapeActive = true;
+
+        rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+        rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+        rectTransform.pivot = new Vector2(0.5f, 0.5f);
+        
     }
     void Start()
     {
@@ -285,6 +290,6 @@ public class Shape : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPo
         Vector2 newPos;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, eventData.position, Camera.main, out newPos);
 
-        rectTransform.localPosition = newPos + offSet;
+        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
     }
 }
